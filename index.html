@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Руководство пользователя роутера</title>
+<style>
+  /* =========================================================
+     ЧТОБЫ ОТРЕДАКТИРОВАТЬ ТЕКСТ: ищите нужную фразу в HTML ниже
+     (Ctrl+F в текстовом редакторе) и меняйте её прямо в разметке.
+     ЧТОБЫ ЗАМЕНИТЬ КАРТИНКУ: замените ссылку в src="..." на свою
+     (например, на файл рядом: src="img/1.png").
+     ========================================================= */
+
+  :root{
+    --bg: #f7f8fa;
+    --panel: #ffffff;
+    --ink: #1b2430;
+    --ink-soft: #5b6672;
+    --accent: #2f6fed;
+    --accent-soft: #eaf1ff;
+    --border: #e4e8ee;
+    --warn-bg: #fff4e5;
+    --warn-border: #f3c98b;
+    --danger-bg: #fdecec;
+    --danger-border: #f2b8b5;
+    --ok-bg: #e9f7ef;
+    --ok-border: #a9dfbf;
+    --radius: 10px;
+    --maxw: 880px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+
+  code{
+    background: #eef1f5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+  pre{
+    background: #1b2430;
+    color: #e9edf3;
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    position: relative;
+  }
+  pre code{ background: none; color: inherit; padding:0; }
+
+  img{ max-width: 100%; border-radius: var(--radius); border: 1px solid var(--border); display:block; margin: 10px 0; }
+  figure{ margin: 16px 0; }
+  figcaption{ font-size: 0.88em; color: var(--ink-soft); margin-top: 6px; }
+
+  h1,h2,h3{ line-height:1.25; }
+  h2{ margin-top: 0; }
+
+  /* Header / nav */
+  header.site-header{
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top:0; z-index: 50;
+  }
+  .nav-inner{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 10px 20px;
+  }
+  nav.top-nav{
+    display:flex; flex-wrap: wrap; gap: 6px 14px;
+    font-size: 0.9em;
+  }
+  nav.top-nav a{ color: var(--ink-soft); white-space: nowrap; }
+  nav.top-nav a:hover{ color: var(--accent); text-decoration:none; }
+
+  /* Hero */
+  .hero{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 40px 20px 20px;
+  }
+  .eyebrow{
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75em;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .hero h1{ font-size: 2em; margin: 8px 0 14px; }
+  .hero p.lead{ font-size: 1.05em; color: var(--ink-soft); }
+  .hero p.lead strong{ color: var(--ink); }
+
+  main{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  section.block{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    margin-bottom: 22px;
+    scroll-margin-top: 70px;
+  }
+  section.block .icon{ font-size: 1.6em; }
+
+  .callout{
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin: 14px 0;
+    border: 1px solid var(--border);
+  }
+  .callout.warn{ background: var(--warn-bg); border-color: var(--warn-border); }
+  .callout.danger{ background: var(--danger-bg); border-color: var(--danger-border); }
+  .callout.ok{ background: var(--ok-bg); border-color: var(--ok-border); }
+  .callout.info{ background: var(--accent-soft); border-color: #c9dcfb; }
+
+  .wifi-card{
+    display:flex; flex-wrap: wrap; gap: 24px;
+    background: var(--accent-soft);
+    border: 1px solid #c9dcfb;
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-top: 14px;
+  }
+  .wifi-card div{ min-width: 160px; }
+  .wifi-card .label{ font-size:0.8em; color: var(--ink-soft); text-transform: uppercase; letter-spacing:0.04em; }
+  .wifi-card .value{ font-size: 1.15em; font-weight: 600; margin-top: 4px; }
+
+  details.tabs-group{ margin: 10px 0 18px; }
+  details.model-tab{
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin: 10px 0;
+    padding: 10px 16px;
+    background: #fbfcfe;
+  }
+  details.model-tab > summary{
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+  }
+  details.model-tab > summary::-webkit-details-marker{ display:none; }
+  details.model-tab > summary::before{
+    content: "▶";
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 0.7em;
+    transition: transform 0.15s ease;
+    color: var(--accent);
+  }
+  details.model-tab[open] > summary::before{ transform: rotate(90deg); }
+  details.model-tab .tab-body{ padding-top: 12px; }
+
+  .copy-btn{
+    position: absolute; top: 8px; right: 8px;
+    background: #2f3b4c; color:#fff; border:none;
+    padding: 5px 10px; border-radius: 6px; font-size: 0.78em; cursor: pointer;
+  }
+  .copy-btn:hover{ background: var(--accent); }
+
+  .backup-grid{
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+    gap: 12px; margin: 14px 0;
+  }
+  .backup-card{
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 14px 16px; background: #fbfcfe;
+  }
+  .backup-card .name{ font-weight:600; margin-bottom:8px; }
+  .btn-download{
+    display:inline-block; background: var(--accent); color:#fff;
+    padding: 6px 12px; border-radius: 6px; font-size: 0.88em;
+  }
+  .btn-download:hover{ background:#1e56c6; text-decoration:none; }
+
+  ol, ul{ padding-left: 1.3em; }
+  ol li, ul li{ margin: 6px 0; }
+
+  footer{
+    text-align: center; color: var(--ink-soft); font-size: 0.85em;
+    padding: 30px 20px 50px;
+  }
+
+  /* Mobile menu button */
+  .mobile-toggle{ display:none; }
+  @media (max-width: 720px){
+    nav.top-nav{ display: none; flex-direction: column; }
+    nav.top-nav.open{ display:flex; }
+    .mobile-toggle{
+      display:block; background:none; border:1px solid var(--border);
+      border-radius:6px; padding:6px 12px; font-size:0.9em; cursor:pointer;
+      color: var(--ink);
+    }
+    section.block{ padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <button class="mobile-toggle" id="navToggle">☰ Разделы инструкции</button>
+    <nav class="top-nav" id="topNav">
+      <a href="#wifi">📶 Wi-Fi данные</a>
+      <a href="#troubleshooting">🆘 Что делать, если не работает</a>
+      <a href="#diagnostics">🔍 Диагностика</a>
+      <a href="#connection">🔗 Подключение роутера</a>
+      <a href="#web-interface">🖥️ Веб-панель управления</a>
+      <a href="#podkop-settings">⚙️ Настройки Podkop</a>
+      <a href="#updates">🔄 Обновление серверов</a>
+      <a href="#reset">🔁 Сброс и восстановление</a>
+      <a href="#backups">💾 Бекапы прошивки</a>
+      <a href="#gaming-mining">🎮 Игровые приставки / Майнинг</a>
+      <a href="#server-switch">🔀 Смена серверов</a>
+      <a href="#main-router">🌐 Роутер как основной</a>
+      <a href="#wifi-settings">📡 Смена названия и пароля Wi-Fi</a>
+      <a href="#xiaomi-4a">📦 Xiaomi 4A GIGABIT</a>
+      <a href="#avito-rkn">📋 Авито и Роскомнадзор</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">OpenWrt · Podkop · Выборочная маршрутизация</div>
+  <h1>Руководство пользователя роутера</h1>
+  <p class="lead"><strong>Ваш роутер уже полностью настроен</strong> и готов к работе. Предустановлена подписка с доступом к более чем 130 серверам, установлено автообновление. Просто подключитесь к Wi-Fi и пользуйтесь.</p>
+
+  <div class="wifi-card" id="wifi">
+    <div>
+      <div class="label">Сети</div>
+      <div class="value">OpenWrt<br>OpenWrt-5g</div>
+    </div>
+    <div>
+      <div class="label">Пароль</div>
+      <div class="value">avito1234</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <section class="block" id="troubleshooting">
+    <div class="icon">🆘</div>
+    <h2>Что делать, если роутер не работает?</h2>
+
+    <h3>1. Проверка физического подключения</h3>
+    <p>Прежде всего убедитесь, что всё правильно подключено — см. раздел <a href="#connection"><strong>«Подключение»</strong></a>. Если подключение верное, но роутер не работает — <strong>просто перезагрузите его</strong>: вытащите вилку питания и вставьте обратно. В большинстве случаев это помогает.</p>
+
+    <div class="callout info">
+      📦 <strong>У вас Xiaomi 4A GIGABIT?</strong> Для этой модели — отдельная инструкция по устранению неполадок и обновлению серверов → <a href="#xiaomi-4a">перейти в раздел</a>
+    </div>
+
+    <h3>2. Не работает даже обычный интернет</h3>
+    <p>Если перезагрузка не помогла — проверьте обычные сайты: Яндекс, ВКонтакте, Гугл. Если они тоже не открываются — дело в ВПН: он запускается раньше, чем устанавливается основное соединение. Нужно временно его отключить.</p>
+    <p>Для этого зайдите в <a href="#web-interface"><strong>веб-панель</strong></a> → <strong>Services → Podkop → Диагностика</strong>:</p>
+
+    <figure>
+      <img src="https://perspekt1va.github.io/img/1.png" alt="Services → Podkop">
+      <figcaption>Открываем Services → Podkop, переходим во вкладку Диагностика</figcaption>
+    </figure>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/2.png" alt="Вкладка Диагностика">
+      <figcaption>Вкладка Диагностика — кнопки управления Podkop</figcaption>
+    </figure>
+
+    <ol>
+      <li>Нажмите <code>Отключить автостарт</code></li>
+      <li>Нажмите <code>Остановить podkop</code> <em>(Если вместо «Остановить» видите «Запустить» — podkop уже остановлен, вторую кнопку нажимать не нужно)</em></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/3.png" alt="Отключить автостарт и Остановить">
+      <figcaption>Кнопки «Отключить автостарт» и «Остановить podkop»</figcaption>
+    </figure>
+
+    <ol start="3">
+      <li>Перезагрузите роутер. Когда появится обычный интернет — нажмите <code>Включить автостарт</code> и <code>Запустить podkop</code></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/4.png" alt="Включить автостарт и Запустить">
+      <figcaption>Нажимаем «Включить автостарт» и «Запустить podkop»</figcaption>
+    </figure>
+
+    <div class="callout danger">🚨 Сначала должен появиться обычный интернет — и только после этого ВПН.</div>
+
+    <h3>3. Обычный интернет есть, заблокированные сайты не работают</h3>
+    <p>Зайдите в <a href="#web-interface"><strong>веб-панель</strong></a> → <strong>Services → Podkop → Диагностика</strong> и нажмите <code>Перезапустить podkop</code>. Подождите до 5 минут.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/5.png" alt="Перезапустить Podkop">
+      <figcaption>Кнопка «Перезапустить Podkop» во вкладке Диагностика</figcaption>
+    </figure>
+
+    <h3>4. Углублённая диагностика</h3>
+    <p>Если предыдущие варианты не помогли — необходимо провести диагностику и найти конкретную причину. Подробное описание — в разделе <a href="#diagnostics"><strong>«Диагностика»</strong></a> ниже.</p>
+  </section>
+
+  <section class="block" id="diagnostics">
+    <div class="icon">🔍</div>
+    <h2>Диагностика</h2>
+    <p>Если предыдущие шаги не помогли — нужно запустить диагностику и найти конкретную причину неполадки.</p>
+
+    <h3>Как запустить диагностику</h3>
+    <p>Находясь в <a href="#web-interface"><strong>веб-панели</strong></a>, перейдите в <strong>Services → Podkop</strong> и откройте вкладку <strong>Диагностика</strong>. Нажмите кнопку <code>Запустить диагностику</code>.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/6.png" alt="Запустить диагностику">
+      <figcaption>Вкладка Диагностика — нажимаем «Запустить диагностику»</figcaption>
+    </figure>
+
+    <div class="callout warn">⚠️ <strong>Первый запуск может показать ошибки</strong> — маршруты ещё не успели инициализироваться. Подождите 2–3 минуты и запустите снова.</div>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/7.png" alt="Ошибки при первом запуске">
+      <figcaption>Результат диагностики с ошибками при первом запуске</figcaption>
+    </figure>
+
+    <h3>Успешная диагностика</h3>
+    <p>Если все секции зелёные — роутер работает корректно.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/8.png" alt="Успешная диагностика">
+      <figcaption>Все проверки пройдены — все секции зелёные</figcaption>
+    </figure>
+
+    <h3>Ошибка: «Прокси-трафик не маршрутизируется через FakeIP»</h3>
+    <p>Эта ошибка в конце диагностики означает, что серверы недоступны.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/9.png" alt="Ошибка прокси-трафик FakeIP">
+      <figcaption>Ошибка: «Прокси-трафик не маршрутизируется через FakeIP»</figcaption>
+    </figure>
+    <p>Перейдите во вкладку <strong>Дашборд</strong> и нажмите <strong>«Тестирование задержки»</strong>. Если у сервера пишется <strong>N/A</strong> — его заблокировали. Если сервер рабочий — рядом с ним отображается задержка (пинг) в миллисекундах. Соответственно, если у всех серверов N/A — их нужно обновить.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/10.png" alt="Дашборд — N/A серверов">
+      <figcaption>Дашборд: серверы со статусом N/A — недоступны</figcaption>
+    </figure>
+    <p>Перейдите в раздел <a href="#updates"><strong>«Обновление серверов»</strong></a>.</p>
+
+    <h3>Ошибка FakeIP в браузере</h3>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/11.png" alt="FakeIP браузер не использует">
+      <figcaption>Браузер не использует FakeIP</figcaption>
+    </figure>
+    <p>Если диагностика показывает ошибку FakeIP, но серверы живые — проблема в настройках браузера или сетевого адаптера устройства. При данной ошибке заблокированные сервисы будут работать на других устройствах, подключённых к роутеру, но не на этом компьютере. Необходимо проверить и отключить <strong>«Безопасный DNS»</strong> в настройках браузера, а также проверить настройки DNS сетевого адаптера устройства.</p>
+
+    <p><strong>Для Chrome</strong> — введите в адресную строку и нажмите Enter:</p>
+    <pre><button class="copy-btn" onclick="copyPre(this)">Копировать</button><code>chrome://settings/security?search=dns</code></pre>
+    <p>Найдите пункт <strong>«Использовать защищённый DNS»</strong> и <strong>отключите его</strong>.</p>
+    <p><strong>Для других браузеров</strong> — зайдите в Настройки (значок ⚙️ или три точки в правом верхнем углу). В разделе «Конфиденциальность» или «Безопасность» найдите и отключите «Безопасный DNS» / «DNS over HTTPS».</p>
+
+    <p>После отключения:</p>
+    <ol>
+      <li>Полностью закройте и перезапустите браузер</li>
+      <li>Проверьте работу заблокированных сервисов</li>
+      <li>Откройте новую вкладку в режиме <strong>Инкогнито</strong> (Ctrl+Shift+N) и снова запустите <a href="#diagnostics"><strong>диагностику</strong></a> в <a href="#web-interface"><strong>веб-панели</strong></a></li>
+    </ol>
+  </section>
+
+  <section class="block" id="connection">
+    <div class="icon">🔗</div>
+    <h2>Подключение роутера</h2>
+    <p>Самый простой способ — поставить купленный роутер <strong>вторым</strong> после вашего основного роутера.</p>
+    <ol>
+      <li>Вставьте один конец патч-корда в <strong>LAN-порт</strong> вашего основного роутера. <em>LAN-портов обычно несколько, они выделены цветом, отличным от WAN.</em></li>
+      <li>Второй конец — в <strong>WAN-порт</strong> купленного роутера. <em>WAN — порт для кабеля от провайдера. Он один и стоит отдельно.</em></li>
+    </ol>
+    <div class="callout warn">⚠️ У модели <strong>Xiaomi AX3000T</strong> WAN-порт — крайний левый.</div>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/5456327024529052830.jpg" alt="WAN порт Xiaomi AX3000T">
+      <figcaption>Задняя панель Xiaomi AX3000T — выделен WAN-порт</figcaption>
+    </figure>
+    <p>После соединения подключите блок питания. Через пару минут загорится <strong>синий светодиод</strong> — роутер готов к работе.</p>
+  </section>
+
+  <section class="block" id="web-interface">
+    <div class="icon">🖥️</div>
+    <h2>Веб-панель управления</h2>
+    <p>Подключитесь к Wi-Fi роутера (или соединитесь с ним через патч-корд), откройте любой браузер и перейдите по одному из адресов:</p>
+    <div class="callout info">
+      🌐 <strong>Адрес 1:</strong> <a href="http://192.168.5.1">192.168.5.1</a><br>
+      <strong>Адрес 2:</strong> <a href="http://openwrt.lan/cgi-bin/luci/">openwrt.lan/cgi-bin/luci/</a><br>
+      <strong>Логин:</strong> <code>root</code><br>
+      <strong>Пароль:</strong> не задан — просто нажмите Log in
+    </div>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/13.png" alt="Подключение к Wi-Fi и ввод адреса">
+      <figcaption>Подключаемся к сети роутера, вводим адрес в браузере</figcaption>
+    </figure>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/14.png" alt="Страница авторизации">
+      <figcaption>Страница авторизации — пароль не нужен, нажимаем Log in</figcaption>
+    </figure>
+  </section>
+
+  <section class="block" id="podkop-settings">
+    <div class="icon">⚙️</div>
+    <h2>Настройки Podkop</h2>
+    <p>Этот пакет отвечает за выборочную маршрутизацию. Разберём ключевые параметры.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/15.png" alt="Основные параметры Podkop">
+      <figcaption>Основные параметры настройки Podkop</figcaption>
+    </figure>
+
+    <h3>Subscribe URL</h3>
+    <p>Этот параметр позволяет вставить ссылку подписки вашего VPN, купленного, например, в Telegram. После вставки ссылки подписки в строку <strong>Subscribe URL</strong> — нажмите кнопку <strong>«Получить»</strong> возле параметра «Получить конфигурации». Произойдёт загрузка доступных серверов в параметр <strong>«Доступные конфигурации»</strong> — после чего вы сможете добавить нужный сервер простым нажатием по нему.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/16.png" alt="Subscribe URL и конфигурации">
+      <figcaption>Subscribe URL — вставляем ссылку, получаем и выбираем конфигурации</figcaption>
+    </figure>
+
+    <h3>Списки сообщества</h3>
+    <p>Выбираете, трафик каких сервисов пускать через VPN. <strong>Russia inside</strong> уже выбран — это список большинства популярных заблокированных в России ресурсов. Нажмите <strong>Service list</strong>, чтобы добавить конкретные сервисы дополнительно.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/17.png" alt="Service list — списки">
+      <figcaption>Service list — доступные списки</figcaption>
+    </figure>
+
+    <h3>Пользовательские домены</h3>
+    <p>Добавьте свой домен, если его нет в списках сообщества. Домены, прописанные в этом параметре, будут открываться через VPN. Два способа:</p>
+    <ul>
+      <li><strong>Динамический список</strong> — добавляете домены по одному через кнопку «+»</li>
+      <li><strong>Текстовый список</strong> — вставляете сразу несколько через запятую или с новой строки</li>
+    </ul>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/18.png" alt="Выбор типа списка доменов">
+      <figcaption>Выбор типа: Динамический или Текстовый список</figcaption>
+    </figure>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/19.png" alt="Динамический список">
+      <figcaption>Динамический список — добавление по одному домену</figcaption>
+    </figure>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/20.png" alt="Текстовый список">
+      <figcaption>Текстовый список — вставка нескольких доменов</figcaption>
+    </figure>
+
+    <h3>Полностью маршрутизируемые IP-адреса</h3>
+    <p>Укажите IP конкретного устройства, чтобы <strong>весь</strong> его трафик шёл через VPN. Чаще всего используется для подключения <a href="#gaming-mining"><strong>игровых приставок или ASIC (майнинг-устройств)</strong></a>. Учтите: на этом устройстве не будут открываться банки и госсервисы.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/21.png" alt="Параметр Полностью маршрутизируемые IP-адреса">
+      <figcaption>Параметр «Полностью маршрутизируемые IP-адреса»</figcaption>
+    </figure>
+
+    <div class="callout danger">⚠️ <strong>ОБЯЗАТЕЛЬНО:</strong> после любых изменений пролистайте страницу вниз и нажмите <code>Save & Apply</code> — иначе настройки не сохранятся.</div>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/22.png" alt="Save & Apply">
+      <figcaption>После изменений обязательно нажимайте Save & Apply</figcaption>
+    </figure>
+  </section>
+
+  <section class="block" id="updates">
+    <div class="icon">🔄</div>
+    <h2>Обновление серверов</h2>
+    <div class="callout ok">✅ <strong>Когда нужно:</strong> заблокированные сайты перестали работать / нерабочие сервера — ошибка в диагностике «Прокси-трафик не маршрутизируется через FakeIP»</div>
+
+    <p>Обновление серверов возможно несколькими способами:</p>
+    <ul>
+      <li>Через загрузку <a href="#backups"><strong>«Бекапы прошивки»</strong></a></li>
+      <li>Через нажатие кнопки <strong>«Обновление серверов»</strong></li>
+      <li>Через скрипт</li>
+    </ul>
+    <p>Загрузка бекапа рассматривается в <a href="#backups"><strong>«Бекапы прошивки»</strong></a>. Обновление серверов посредством нажатия соответствующей кнопки или выполнения скрипта будет рассмотрено далее в этой главе.</p>
+    <div class="callout warn">⚠️ Перед выполнением убедитесь, что вы подключены к купленному роутеру по Wi-Fi или по кабелю, а также что на роутере есть интернет!</div>
+
+    <h3>Способ 1 — кнопка «Обновление серверов»</h3>
+
+    <details class="model-tab">
+      <summary>Все остальные модели</summary>
+      <div class="tab-body">
+        <ol>
+          <li>Зайдите в <a href="#web-interface"><strong>веб-панель роутера</strong></a> — <a href="http://192.168.5.1">192.168.5.1</a> или <a href="http://openwrt.lan/cgi-bin/luci/">openwrt.lan/cgi-bin/luci/</a></li>
+          <li>Перейдите во вкладку <strong>Services → Podkop → Дашборд</strong> (подробнее — в разделе <a href="#server-switch"><strong>«Смена серверов»</strong></a>). Нажмите кнопку <strong>«Обновить сервера»</strong></li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/62.png" alt="Кнопка Обновить сервера">
+          <figcaption>Нажимаем кнопку «Обновить сервера» во вкладке Дашборд</figcaption>
+        </figure>
+        <ol start="3">
+          <li>После успешного обновления серверов увидите соответствующую надпись и количество обновлённых серверов</li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/63.png" alt="Успешное обновление через кнопку">
+          <figcaption>Успешное обновление — надпись с количеством обновлённых серверов</figcaption>
+        </figure>
+        <ol start="4">
+          <li>Если интернета на роутере нет — будет соответствующая ошибка и сервера не обновятся. Проверьте подключение к интернету и при необходимости восстановите его по разделу <a href="#troubleshooting"><strong>«Что делать, если роутер не работает?»</strong></a></li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/64.png" alt="Ошибка обновления — нет интернета">
+          <figcaption>Ошибка обновления при отсутствии интернета на роутере</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <details class="model-tab">
+      <summary>Xiaomi 4A Gigabit</summary>
+      <div class="tab-body">
+        <ol>
+          <li>Зайдите в <a href="#web-interface"><strong>веб-панель роутера</strong></a> — <a href="http://192.168.5.1">192.168.5.1</a> или <a href="http://openwrt.lan/cgi-bin/luci/">openwrt.lan/cgi-bin/luci/</a></li>
+          <li>Перейдите во вкладку <strong>Services → Podkop → Диагностика</strong> (подробнее — в разделе <a href="#server-switch"><strong>«Смена серверов»</strong></a>). Нажмите кнопку <strong>«Сменить сервер»</strong></li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/67.png" alt="Кнопка Сменить сервер">
+          <figcaption>Нажимаем кнопку «Сменить сервер»</figcaption>
+        </figure>
+        <ol start="3">
+          <li>После успешной смены сервера вы увидите соответствующую надпись, страну сервера и его пинг (задержку)</li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/68.png" alt="Успешная смена сервера 4A">
+          <figcaption>Успешная смена сервера — страна и задержка</figcaption>
+        </figure>
+        <ol start="4">
+          <li>Если интернета на роутере нет — будет соответствующая ошибка и сервера не обновятся. Проверьте подключение к интернету и при необходимости восстановите его по разделу <a href="#troubleshooting"><strong>«Что делать, если роутер не работает?»</strong></a></li>
+        </ol>
+      </div>
+    </details>
+
+    <h3>Способ 2 — скрипт через SSH</h3>
+    <ol>
+      <li>Скачайте Putty: <a href="https://putty.org.ru/files/putty-0.73-ru-17/putty.exe">putty.exe</a> — либо по любой ссылке из интернета</li>
+      <li>Запустите, в поле <strong>«Имя хоста (или IP-адрес)»</strong> введите <code>192.168.5.1</code>, нажмите <strong>«Соединиться»</strong></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/23.png" alt="Окно Putty">
+      <figcaption>Вводим IP 192.168.5.1 и нажимаем Соединиться</figcaption>
+    </figure>
+    <ol start="3">
+      <li>Появится окно предупреждения безопасности — нажмите <strong>«Да»</strong></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/24.png" alt="Предупреждение безопасности">
+      <figcaption>Нажимаем Да</figcaption>
+    </figure>
+    <ol start="4">
+      <li>На запрос <code>login as:</code> введите <code>root</code> и нажмите Enter <em>(Если ранее задавали пароль — введите его, символы при вводе не отображаются)</em></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/25.png" alt="Ввод логина root">
+      <figcaption>Вводим root и нажимаем Enter</figcaption>
+    </figure>
+
+    <p>Далее скрипт обновления серверов отличается в зависимости от модели роутера.</p>
+
+    <details class="model-tab">
+      <summary>Все остальные модели</summary>
+      <div class="tab-body">
+        <ol start="5">
+          <li>Скопируйте команду ниже, вставьте в терминал <strong>правой кнопкой мыши</strong> и нажмите Enter:</li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/26.png" alt="Вставка команды в терминал">
+          <figcaption>Вставляем команду правой кнопкой мыши и нажимаем Enter</figcaption>
+        </figure>
+        <p><strong>Команда обновления серверов</strong></p>
+        <pre><button class="copy-btn" onclick="copyPre(this)">Копировать</button><code>wget -qO /tmp/upd.sh https://bit.ly/4290OrT && sh /tmp/upd.sh restart; rm -f /tmp/upd.sh</code></pre>
+        <div class="callout ok">✅ При успешном обновлении серверов в консоли увидите соответствующее сообщение — «Сервера обновлены»</div>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/27.png" alt="Сервера обновлены">
+          <figcaption>Успешное обновление — сообщение «Сервера обновлены»</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <details class="model-tab">
+      <summary>Xiaomi 4A Gigabit</summary>
+      <div class="tab-body">
+        <ol start="5">
+          <li>Скопируйте команду ниже, вставьте в терминал <strong>правой кнопкой мыши</strong> и нажмите Enter:</li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/65.png" alt="Вставка команды в терминал 4A">
+          <figcaption>Вставляем команду правой кнопкой мыши и нажимаем Enter</figcaption>
+        </figure>
+        <p><strong>Команда обновления серверов</strong></p>
+        <pre><button class="copy-btn" onclick="copyPre(this)">Копировать</button><code>curl -sL "https://bit.ly/4giC4WD" | sh</code></pre>
+        <div class="callout ok">✅ При успешном обновлении сервера в консоли увидите соответствующее сообщение — «ОК: выбран Венгрия» («Страна сервера»)</div>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/66.png" alt="Сервер обновлён — ОК выбран Венгрия">
+          <figcaption>Успешное обновление — сообщение «ОК: выбран Венгрия»</figcaption>
+        </figure>
+      </div>
+    </details>
+  </section>
+
+  <section class="block" id="reset">
+    <div class="icon">🔁</div>
+    <h2>Сброс настроек и восстановление</h2>
+    <p>Если вы проводили эксперименты с роутером или изменяли настройки, после чего он перестал работать — перед загрузкой бекапа необходимо сделать полный сброс до заводских настроек.</p>
+
+    <div class="callout danger">🚨 <strong>Внимание!</strong> После сброса все ваши личные настройки будут удалены: название Wi-Fi сетей, пароль, PPPoE и другие изменения. На роутере сохранится прошивка и всё необходимое программное обеспечение, НО серверов VPN не будет — их необходимо будет добавить: самостоятельно (при наличии), через кнопку, через <a href="#updates">скрипт SSH</a> или через загрузку <a href="#backups">бекапа</a></div>
+
+    <div class="callout info">ℹ️ Если вы ничего не меняли и просто хотите обновить сервера — сброс делать не нужно, сразу переходите к загрузке <a href="#backups">бекапа</a></div>
+
+    <h3>Способ 1 — кнопка на корпусе роутера</h3>
+    <ol>
+      <li>Найдите кнопку <strong>Reset</strong> на корпусе роутера — обычно это маленькое отверстие или небольшая кнопка сзади или снизу устройства</li>
+      <li>Возьмите скрепку или зубочистку и удерживайте кнопку <strong>10–15 секунд</strong> при включённом роутере</li>
+      <li>Роутер перезагрузится — светодиод начнёт мигать. Дождитесь полной загрузки (~2–3 минуты)</li>
+      <li>После сброса подключитесь к роутеру — названия Wi-Fi сетей и пароль прежние (как при покупке). Состояние роутера — как при покупке, но без прописанных серверов VPN</li>
+    </ol>
+
+    <h3>Способ 2 — через веб-панель</h3>
+    <ol>
+      <li>Зайдите в <a href="#web-interface">веб-панель</a> (<code>192.168.5.1</code>)</li>
+      <li>Перейдите: <strong>System → Backup / Flash Firmware</strong></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/28.png" alt="System → Backup / Flash Firmware">
+      <figcaption>Открываем System → Backup / Flash Firmware</figcaption>
+    </figure>
+    <ol start="3">
+      <li>Нажмите кнопку <strong>Perform reset</strong></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/29.png" alt="Кнопка Perform reset">
+      <figcaption>Нажимаем Perform reset</figcaption>
+    </figure>
+    <ol start="4">
+      <li>Подтвердите действие — нажмите <strong>OK</strong> — роутер перезагрузится</li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/30.png" alt="Окно подтверждения сброса">
+      <figcaption>Нажимаем OK для подтверждения сброса</figcaption>
+    </figure>
+
+    <p>После сброса роутер готов к новым экспериментам, либо добавлению серверов через <a href="#updates">скрипт</a> или <a href="#backups">бекап</a></p>
+  </section>
+
+  <section class="block" id="backups">
+    <div class="icon">💾</div>
+    <h2>Бекапы прошивки</h2>
+    <p>Бекапы — это готовые файлы прошивки с уже настроенной выборочной маршрутизацией и всеми параметрами как при покупке. Загрузка бекапа позволяет:</p>
+    <ul>
+      <li>Восстановить роутер после случайного сброса настроек</li>
+      <li><strong>Обновить серверы VPN</strong> — как альтернатива SSH-скрипту из раздела <a href="#updates">«Обновление серверов»</a></li>
+      <li>Вернуть роутер к первоначальному состоянию после любых экспериментов</li>
+    </ul>
+
+    <div class="callout warn">⚠️ <strong>Учтите:</strong> если вы меняли название Wi-Fi сетей, пароль или другие настройки — после загрузки бекапа они будут сброшены. Роутер вернётся к настройкам как при покупке</div>
+    <div class="callout danger">🚨 <strong>Важно!</strong> Загружайте бекап строго для своей модели роутера — файл от другой модели выведет устройство из строя. Если это всё же произошло — сделайте сброс через кнопку на корпусе (см. раздел <a href="#reset">«Сброс»</a> выше)</div>
+
+    <div class="backup-grid">
+      <div class="backup-card">
+        <div class="name">Xiaomi AX3000T</div>
+        <a class="btn-download" href="https://drive.google.com/uc?export=download&id=1vrODBbAVSN5KilV8lXeuAWFhyFuRGhIC">⬇ Скачать</a>
+      </div>
+      <div class="backup-card">
+        <div class="name">Cudy WBR3000UAX</div>
+        <a class="btn-download" href="https://drive.google.com/uc?export=download&id=1uyZ4paPc1fSSuvfa-AFd-gBlnRDXZpFd">⬇ Скачать</a>
+      </div>
+      <div class="backup-card">
+        <div class="name">Xiaomi Mi Router 4</div>
+        <a class="btn-download" href="https://drive.google.com/uc?export=download&id=18QnFF-lPz539noIHwvQM0vqChrQ966Fz">⬇ Скачать</a>
+      </div>
+      <div class="backup-card">
+        <div class="name">SmartBox Turbo+</div>
+        <a class="btn-download" href="https://drive.google.com/uc?export=download&id=1IznDqsDYHMTGGW6l1kTHpeFgk5lvMWP5">⬇ Скачать</a>
+      </div>
+      <div class="backup-card">
+        <div class="name">SmartBox GIGA</div>
+        <a class="btn-download" href="https://drive.google.com/uc?export=download&id=19VwbDcgcOFX7AFQnKADN1wEI5DTtUsg_">⬇ Скачать</a>
+      </div>
+      <div class="backup-card">
+        <div class="name">Xiaomi 4A Gigabit</div>
+        <div>Version 1: <a class="btn-download" href="https://drive.google.com/uc?export=download&id=1bfjhejpBMitF2cQUKxif3-yfq6YuneNK">⬇ Скачать</a></div>
+        <div style="margin-top:6px;">Version 2: <a class="btn-download" href="https://drive.google.com/uc?export=download&id=1XpiLUsVKEPCbh68ZJKR10bxHf9l14FSh">⬇ Скачать</a></div>
+      </div>
+    </div>
+
+    <details class="model-tab">
+      <summary>❓ FAQ: Как отличить Xiaomi 4A Gigabit Version 1 от Version 2?</summary>
+      <div class="tab-body">
+        <p><strong>Способ 1 — по корпусу:</strong></p>
+        <p><strong>Version 2</strong> имеет на задней стороне роутера крепление на стену, а <strong>Version 1</strong> — не имеет.</p>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/V1.jpg" alt="Xiaomi 4A Gigabit Version 1">
+          <figcaption>Version 1</figcaption>
+        </figure>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/V2.jpg" alt="Xiaomi 4A Gigabit Version 2">
+          <figcaption>Version 2</figcaption>
+        </figure>
+        <p><strong>Способ 2 — через веб-интерфейс:</strong></p>
+        <p>Зайдите в веб-панель роутера и посмотрите модель в разделе <strong>Status</strong>.</p>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/69.png" alt="Веб-интерфейс Xiaomi 4A Gigabit Version 1">
+          <figcaption>Version 1</figcaption>
+        </figure>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/70.png" alt="Веб-интерфейс Xiaomi 4A Gigabit Version 2">
+          <figcaption>Version 2</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <h3>Как загрузить бекап</h3>
+    <ol>
+      <li>Войдите в <a href="#web-interface">веб-панель</a> (<code>192.168.5.1</code>)</li>
+      <li>Перейдите: <strong>System → Backup / Flash Firmware</strong></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/28.png" alt="System → Backup / Flash Firmware">
+      <figcaption>Открываем System → Backup / Flash Firmware</figcaption>
+    </figure>
+    <ol start="3">
+      <li>Нажмите <strong>Upload archive...</strong></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/31.png" alt="Кнопка Upload archive">
+      <figcaption>Нажимаем Upload archive...</figcaption>
+    </figure>
+    <ol start="4">
+      <li>В открывшемся окне нажмите <strong>Browse...</strong> и выберите скачанный файл бекапа</li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/32.png" alt="Окно выбора файла">
+      <figcaption>Нажимаем Browse и выбираем файл</figcaption>
+    </figure>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/33.png" alt="Файл бекапа в папке">
+      <figcaption>Выбираем файл Backup-OpenWrt-«Модель_роутера».tar.gz</figcaption>
+    </figure>
+    <ol start="5">
+      <li>После выбора файла нажмите <strong>Upload</strong></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/34.png" alt="Нажимаем Upload">
+      <figcaption>Файл выбран — нажимаем Upload</figcaption>
+    </figure>
+    <ol start="6">
+      <li>Появится список файлов для восстановления — нажмите <strong>Continue</strong> для подтверждения</li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/35.png" alt="Подтверждение — Continue">
+      <figcaption>Нажимаем Continue для завершения загрузки</figcaption>
+    </figure>
+    <ol start="7">
+      <li>Роутер перезагрузится (~3–5 минут). Дождитесь синего светодиода</li>
+      <li>Подключитесь к Wi-Fi и наслаждайтесь доступом к заблокированным сервисам. При необходимости: <a href="#troubleshooting">«Что делать, если не работает»</a> или <a href="#diagnostics">«Диагностика»</a></li>
+    </ol>
+  </section>
+
+  <section class="block" id="gaming-mining">
+    <div class="icon">🎮</div>
+    <h2>Игровые приставки / Майнинг-устройства</h2>
+    <p>Если вам нужно пустить весь трафик конкретного устройства через VPN (например, PlayStation, Xbox или ASIC (майнинг-устройство)) — используйте параметр <strong>«Полностью маршрутизируемые IP-адреса»</strong> в настройках Podkop.</p>
+
+    <div class="callout warn">⚠️ <strong>Важно:</strong> устройство с прописанным IP будет работать полностью через VPN. Доступ к банкам, госсервисам и другим российским ресурсам с него может быть ограничен.</div>
+
+    <ol>
+      <li><strong>Узнайте IP-адрес вашего устройства.</strong> IP-адрес устройства можно узнать через <a href="#web-interface">веб-панель</a> — зайдите в неё и прокрутите страницу вниз, как показано ниже:</li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/36.gif" alt="IP устройства в веб-панели">
+      <figcaption>Прокручиваем страницу вниз для просмотра подключённых устройств</figcaption>
+    </figure>
+    <p>Далее необходимо присвоить устройству статичный (постоянный) IP-адрес. Для этого нажмите кнопку <strong>«Set Static»</strong> напротив вашего устройства:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/37.png" alt="Список устройств с кнопкой Set Static">
+      <figcaption>Нажимаем Set Static напротив нашего устройства</figcaption>
+    </figure>
+    <ol start="2">
+      <li>Нажмите кнопку <strong>«Save & Apply»</strong> для того чтобы сохранить и подтвердить действие. IP-адрес устройства при этом станет статическим (постоянным)</li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/38.png" alt="Save & Apply для статического IP">
+      <figcaption>Нажимаем Save & Apply для сохранения статического IP</figcaption>
+    </figure>
+    <ol start="3">
+      <li>Зайдите в <a href="#web-interface">веб-панель</a> → <strong>Services → Podkop</strong></li>
+      <li>Найдите поле <strong>«Полностью маршрутизируемые IP-адреса»</strong>, впишите необходимый IP-адрес и добавьте его нажатием кнопки <strong>«+»</strong></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/39.png" alt="Поле маршрутизируемые IP с добавленным IP">
+      <figcaption>Вводим IP устройства и нажимаем «+»</figcaption>
+    </figure>
+    <ol start="5">
+      <li>После добавления необходимого IP-адреса <strong>ОБЯЗАТЕЛЬНО</strong> необходимо сохранить и применить настройки. Делается это путем нажатия соответствующей кнопки — <code>Save & Apply</code></li>
+    </ol>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/40.png" alt="Save & Apply">
+      <figcaption>Нажимаем Save & Apply для сохранения настроек</figcaption>
+    </figure>
+    <p>После сохранения всё устройство будет работать через VPN без дополнительных настроек на самой приставке или майнере.</p>
+  </section>
+
+  <section class="block" id="server-switch">
+    <div class="icon">🔀</div>
+    <h2>Смена серверов</h2>
+    <p>Как уже было сказано, на роутере прописано более 100 автообновляемых серверов VPN. Однако бывает так, что выбранный сервер оказывается загруженным, ввиду чего видеосервисы могут загружаться дольше чем обычно. Либо бывают ситуации, когда определённому игровому, музыкальному или иному сервису требуется сервер определённой страны. В таком случае вы можете принудительно выбрать нужный вам сервер на всех моделях, кроме Xiaomi 4A Gigabit. На нём вы можете только поменять сервер на случайный.</p>
+
+    <details class="model-tab">
+      <summary>Все остальные модели</summary>
+      <div class="tab-body">
+        <p>Зайдите в <a href="#web-interface">веб-панель</a> и перейдите во вкладку <strong>Services → Podkop → Дашборд</strong>:</p>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/1.png" alt="Services → Podkop">
+          <figcaption>Открываем Services → Podkop</figcaption>
+        </figure>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/41.png" alt="Дашборд с серверами">
+          <figcaption>Вкладка Дашборд — список доступных серверов</figcaption>
+        </figure>
+        <p>Мы можем видеть, что сейчас выбран сервер — <strong>Самый быстрый</strong>, а ниже отображаются блоки с доступными серверами. При необходимости можете произвести тестирование задержки путём нажатия соответствующей кнопки — <strong>«Тестирование задержки»</strong>.</p>
+        <p>Для выбора конкретного сервера достаточно просто нажать на соответствующий блок — вокруг него появится синяя обводка, а с блока «Самый быстрый» синяя обводка пропадёт. Это значит, что вы успешно выбрали необходимый вам сервер.</p>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/42.png" alt="Выбранный сервер с синей обводкой">
+          <figcaption>Выбранный сервер отмечен синей обводкой</figcaption>
+        </figure>
+      </div>
+    </details>
+
+    <details class="model-tab">
+      <summary>Xiaomi 4A Gigabit</summary>
+      <div class="tab-body">
+        <ol>
+          <li>Зайдите в <a href="#web-interface">веб-панель</a> — <a href="http://192.168.5.1">192.168.5.1</a> или <a href="http://openwrt.lan/cgi-bin/luci/">openwrt.lan/cgi-bin/luci/</a></li>
+          <li>Перейдите во вкладку <strong>Services → Podkop → Диагностика</strong>. Нажмите кнопку <strong>«Сменить сервер»</strong></li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/67.png" alt="Кнопка Сменить сервер">
+          <figcaption>Нажимаем кнопку «Сменить сервер»</figcaption>
+        </figure>
+        <ol start="3">
+          <li>После успешной смены сервера вы увидите соответствующую надпись, страну сервера и его пинг (задержку)</li>
+        </ol>
+        <figure>
+          <img src="https://perspekt1va.github.io/img/68.png" alt="Успешная смена сервера 4A">
+          <figcaption>Успешная смена сервера — страна и задержка</figcaption>
+        </figure>
+      </div>
+    </details>
+  </section>
+
+  <section class="block" id="main-router">
+    <div class="icon">🌐</div>
+    <h2>Установка роутера как основного</h2>
+    <p>Если вы хотите установить купленный роутер как основной, прежде всего необходимо узнать у вашего провайдера интернета тип подключения и данные от него (при наличии). Вы можете это сделать позвонив провайдеру напрямую, либо задав соответствующий вопрос онлайн в службе поддержки или чат-боте. Ваш запрос может быть произвольным, например:</p>
+    <div class="callout info">💬 «Я приобрел(а) новый роутер и хочу его самостоятельно установить заместо старого. Назовите тип подключения и предоставьте по нему все необходимые данные.»</div>
+
+    <p>После того как вы узнали данные — необходимо вставить интернет-кабель провайдера в <strong>WAN-порт</strong> приобретённого роутера. Убедитесь, что вы подключены к роутеру:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/13.png" alt="Подключение к роутеру">
+      <figcaption>Убедитесь, что подключены к роутеру по Wi-Fi или кабелю</figcaption>
+    </figure>
+
+    <p>После подключения можно приступать к настройкам. Прежде всего, <strong>перед всеми настройками интернет-соединения, настоятельно рекомендуется отключить ВПН на роутере</strong>. Для этого выполните действия, описанные в разделе <a href="#troubleshooting">«Что делать, если роутер не работает?»</a> → пункт «2. Не работает даже обычный интернет».</p>
+
+    <p>Существует огромное множество типов подключения к интернету, но наиболее распространены следующие три: <strong>PPPoE</strong>, <strong>По MAC-адресу</strong> и <strong>DHCP (автоматический)</strong>. Также у провайдеров-операторов, например Билайн, подключение к интернету производится путём ввода логина и пароля на их специальном сайте (авторизация в личный кабинет). <strong>Важно:</strong> не путать данный тип подключения с PPPoE — о нём будет сказано ниже.</p>
+
+    <h3>PPPoE</h3>
+    <p>Для проведения настроек зайдите в <a href="#web-interface">веб-панель</a>. Далее перейдите во вкладку сетевых настроек интерфейсов — <strong>Network → Interfaces</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/43.png" alt="Network → Interfaces">
+      <figcaption>Открываем Network → Interfaces</figcaption>
+    </figure>
+    <p>Здесь необходимо перейти в настройки WAN-интерфейса. Находим WAN-интерфейс (обычно второй по порядку) и нажимаем напротив него кнопку <strong>«Edit»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/44.png" alt="Кнопка Edit у WAN интерфейса">
+      <figcaption>Нажимаем Edit напротив WAN-интерфейса</figcaption>
+    </figure>
+    <p>Здесь мы видим параметр <strong>«Protocol»</strong> — его нам и необходимо поменять. Нажимаем на текущий протокол <strong>«DHCP»</strong> для открытия перечня протоколов:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/45.png" alt="Выбор протокола">
+      <figcaption>Нажимаем на DHCP для смены протокола</figcaption>
+    </figure>
+    <p>Выбираем протокол <strong>PPPoE</strong> и подтверждаем смену нажатием кнопки <strong>«Switch Protocol»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/46.png" alt="Выбор PPPoE и Switch Protocol">
+      <figcaption>Выбираем PPPoE и нажимаем Switch Protocol</figcaption>
+    </figure>
+    <p>После смены протокола необходимо заполнить данные подключения — <strong>логин</strong> («PAP/CHAP username») и <strong>пароль</strong> («PAP/CHAP password») в соответствующих полях:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/47.png" alt="Ввод логина и пароля PPPoE">
+      <figcaption>Вводим логин и пароль PPPoE подключения</figcaption>
+    </figure>
+    <p>Убедитесь, что ввели данные правильно. После — сохраните настройки нажатием кнопки <strong>«Save»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/48.png" alt="Кнопка Save">
+      <figcaption>Нажимаем Save для сохранения</figcaption>
+    </figure>
+    <p>Мы видим, что наши изменения сохранились. Чтобы они применились и прописались на роутере, необходимо нажать кнопку <strong>«Save & Apply»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/49.png" alt="Save & Apply">
+      <figcaption>Нажимаем Save & Apply для применения настроек</figcaption>
+    </figure>
+    <p>После сохранения и применения настроек необходимо подождать, пока появится интернет-соединение — вплоть до 5–7 минут.</p>
+    <div class="callout ok">✅ Когда обычный интернет появился на роутере — можно включать ВПН. Для этого выполните действия, описанные в разделе <a href="#troubleshooting">«Что делать, если роутер не работает?»</a> → пункт «2. Не работает даже обычный интернет».</div>
+
+    <h3>По MAC-адресу</h3>
+    <p>Данный тип подключения осуществляется на основе индивидуального сетевого идентификатора вашего роутера — MAC-адреса. Для того чтобы поставить приобретённый роутер как основной при данном типе подключения, необходимо подключить интернет-кабель провайдера в <strong>WAN-порт</strong> роутера и позвонить или написать провайдеру (Поддержка / Чат-бот) с просьбой изменить MAC-адрес подключения к интернету, так как вы приобрели и установили новый роутер.</p>
+    <p>В большинстве случаев интернет-соединение после просьбы появляется в течение 5 минут. Никаких изменений настроек в самом роутере этот тип подключения <strong>НЕ ТРЕБУЕТ</strong>.</p>
+
+    <h3>DHCP (автоматический)</h3>
+    <p>Данный тип подключения является автоматическим и уже стоит при покупке роутера. В таком случае вам нет необходимости ничего настраивать на роутере — нужно лишь вставить интернет-кабель провайдера в <strong>WAN-порт</strong>.</p>
+    <div class="callout warn">⚠️ Как упоминалось ранее — настоятельно рекомендуется отключить ВПН на роутере при настройке интернет-соединения. См. раздел <a href="#troubleshooting">«Что делать, если роутер не работает?»</a> → пункт «2. Не работает даже обычный интернет».</div>
+
+    <h3>Провайдеры-операторы (Билайн и подобные)</h3>
+    <p>Данные операторы чаще всего предоставляют автоматический тип подключения — DHCP — то есть на самом роутере ничего настраивать не нужно, но они требуют авторизации на своём специализированном сайте. Страница авторизации открывается по предоставленному адресу, либо открывается сама при подключении интернет-кабеля провайдера в WAN-порт роутера.</p>
+    <p><strong>Если страница авторизации не открывается:</strong></p>
+    <ol>
+      <li>Проверьте, отключили ли вы ВПН на роутере (см. раздел <a href="#troubleshooting">«Что делать, если роутер не работает?»</a> → пункт «2. Не работает даже обычный интернет»)</li>
+      <li>Если и после отключения ВПН страница не открывается — необходимо сбросить настройки роутера (см. раздел <a href="#reset">«Сброс и восстановление»</a>). После сброса страница авторизации должна открыться</li>
+      <li>Если страница по-прежнему не открывается — проблема на стороне провайдера, обратитесь в их поддержку</li>
+    </ol>
+    <div class="callout ok">✅ После успешной авторизации и настройки интернета выполните восстановление серверов с помощью <a href="#updates">скрипта</a> или <a href="#backups">бекапа</a>.</div>
+  </section>
+
+  <section class="block" id="wifi-settings">
+    <div class="icon">📡</div>
+    <h2>Изменение названия и пароля Wi-Fi сетей</h2>
+    <p>Для того чтобы изменить название и пароль Wi-Fi сетей, необходимо войти в <a href="#web-interface">веб-панель</a>. Далее перейдите во вкладку управления беспроводными сетями — <strong>Network → Wireless</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/50.png" alt="Network → Wireless">
+      <figcaption>Открываем Network → Wireless</figcaption>
+    </figure>
+    <p>Открывается страница настроек беспроводных интерфейсов. Здесь видим две сети — <strong>OpenWrt</strong> и <strong>OpenWrt-5g</strong>. Для изменения настроек каждой из них необходимо нажать кнопку <strong>«Edit»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/51.png" alt="Кнопка Edit у Wi-Fi сети">
+      <figcaption>Нажимаем Edit напротив нужной сети</figcaption>
+    </figure>
+    <p>Мы в окне изменения настроек Wi-Fi сети. Название сети задаётся в параметре <strong>ESSID</strong> — вместо стандартного <code>OpenWrt</code> можете вписать своё:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/52.png" alt="Параметр ESSID — название сети">
+      <figcaption>Параметр ESSID — вводим желаемое название сети</figcaption>
+    </figure>
+    <p>Для изменения пароля необходимо перейти во вкладку <strong>«Network Security»</strong> и в параметре <strong>«Key»</strong> вписать желаемый пароль:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/53.png" alt="Вкладка Network Security — параметр Key">
+      <figcaption>Вкладка Network Security — вводим новый пароль в поле Key</figcaption>
+    </figure>
+    <p>После всех настроек Wi-Fi сети сохраните их нажатием кнопки <strong>«Save»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/54.png" alt="Кнопка Save">
+      <figcaption>Нажимаем Save для сохранения настроек сети</figcaption>
+    </figure>
+    <p>После внесения и сохранения всех необходимых настроек — примените их нажатием кнопки <strong>«Save & Apply»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/55.png" alt="Кнопка Save & Apply">
+      <figcaption>Нажимаем Save & Apply для применения настроек</figcaption>
+    </figure>
+
+    <div class="callout danger">🚨 <strong>ВАЖНО!</strong> После применения настроек ваше устройство автоматически отключится от роутера — так как название и пароль сети изменились. В течение <strong>полутора минут</strong> найдите Wi-Fi сеть с новым названием и подключитесь к ней с новым паролем. Если не успеете — изменения сбросятся и настройки вернутся к прежним. Вам также высветится предупреждение о возврате настроек.</div>
+
+    <p>Если вы хотите применить настройки <strong>без проверки подключения</strong> — нажмите красную кнопку <strong>«Apply unchecked»</strong>. В этом случае не нужно успевать подключаться в течение времени — настройки применятся сразу и навсегда:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/56.png" alt="Кнопка Apply unchecked">
+      <figcaption>Кнопка «Apply unchecked» — применить без проверки подключения</figcaption>
+    </figure>
+  </section>
+
+  <section class="block" id="xiaomi-4a">
+    <div class="icon">📦</div>
+    <h2>Если у вас модель Xiaomi 4A GIGABIT</h2>
+    <p>Данная модель является минимальной для умной выборочной маршрутизации. Ввиду её технических характеристик на ней стоит более старое программное обеспечение, исключающее возможность:</p>
+    <ul>
+      <li>Автоматического выбора сервера с наименьшей задержкой (пинг)</li>
+      <li>Поддержки 130+ серверов и автообновления</li>
+      <li>Поддержки собственных купленных подписок</li>
+      <li>Расширенной диагностики</li>
+    </ul>
+    <p>Умная выборочная маршрутизация производится всё так же за счёт VPN — а именно протокола <strong>VLESS</strong>. Подключение осуществляется за счёт строки подключения к серверу типа <code>vless://...</code></p>
+
+    <p>Для настроек необходимо зайти в <a href="#web-interface">веб-панель</a>, а далее перейти во вкладку <strong>Services → Podkop</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/1.png" alt="Services → Podkop">
+      <figcaption>Открываем Services → Podkop</figcaption>
+    </figure>
+    <p>В отличии от поддержки подписок и множества серверов с удобным выбором, на 4A GIGABIT вы можете вставить только <strong>одну ссылку подключения</strong> — один сервер:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/57.png" alt="Поле ввода vless ссылки на 4A GIGABIT">
+      <figcaption>Поле для вставки ссылки подключения vless://...</figcaption>
+    </figure>
+
+    <h3>Обновление серверов</h3>
+    <p>Так как данный роутер самый слабый и минимальный для выборочной маршрутизации через VPN — он поддерживает только <strong>один работающий сервер одновременно</strong>. Раньше на данной модели стояли мои личные серверы, но и до них добрался Роскомнадзор. Поэтому для восстановления работоспособности ВПН на данной модели проделайте следующие действия.</p>
+    <div class="callout info">🔄 Подробная инструкция по обновлению серверов на Xiaomi 4A Gigabit — в разделе <a href="#updates">«Обновление серверов»</a> (выберите вкладку «Xiaomi 4A Gigabit»).</div>
+
+    <h3>Подключение игровых консолей и майнинг-устройств</h3>
+    <p>Для полной маршрутизации конкретного устройства через VPN имеется параметр <strong>«Принудительные прокси IP»</strong> — аналог параметра «Полностью маршрутизируемые IP-адреса» на других моделях:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/58.png" alt="Параметр Принудительные прокси IP">
+      <figcaption>Параметр «Принудительные прокси IP»</figcaption>
+    </figure>
+    <p>Для добавления IP-адресов устройств необходимо поставить галочку для включения данного параметра — после чего появится поле ввода, где IP-адреса вводятся и добавляются нажатием кнопки <strong>«+»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/59.png" alt="Поле ввода IP адресов с кнопкой +">
+      <figcaption>Включаем параметр, вводим IP и добавляем нажатием «+»</figcaption>
+    </figure>
+
+    <h3>Диагностика</h3>
+    <p>Вкладка Диагностика на данной модели отличается — диагностику нет необходимости запускать вручную, она проводится и проверяет состояние постоянно. На скриншоте ниже — пример корректно функционирующего роутера:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/60.png" alt="Диагностика 4A GIGABIT — всё работает">
+      <figcaption>Диагностика в режиме постоянного мониторинга — роутер работает корректно</figcaption>
+    </figure>
+    <p>Если после подключения роутера не работают заблокированные сервисы или отсутствует интернет — нажмите кнопку <strong>«Перезапустить Podkop»</strong>:</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/61.png" alt="Кнопка Перезапустить Podkop">
+      <figcaption>Нажимаем «Перезапустить Podkop»</figcaption>
+    </figure>
+  </section>
+
+  <section class="block" id="avito-rkn">
+    <div class="icon">📋</div>
+    <h2>Авито и Роскомнадзор</h2>
+    <p>Уважаемый покупатель, мои аккаунты могут блокироваться, так как моя деятельность не нравится «Роскомнадзору», а Авито по его поручению блокирует мне аккаунты.</p>
+    <figure>
+      <img src="https://perspekt1va.github.io/img/5248962077878066260.jpg" alt="Роскомнадзор">
+    </figure>
+    <p>Однако после блокировки я каждый раз создаю новый аккаунт. Как вы уже, наверно, догадались — меня зовут Алексей, поэтому и аккаунты я создаю с именем Алексей. Так, уже были созданы и заблокированы — <strong>Алексей, Алексей 2, Алексей 3, Алексей 4</strong>.</p>
+    <p>Новые мои аккаунты вы можете найти по соответствующим названиям роутеров в поиске и моему имени с порядковым номером — то есть <strong>Алексей 5</strong> или же <strong>Алексей Пятый</strong> и т.д. Модели роутеров я продаю одни и те же, так как они уже проверены временем и множеством клиентов. Поэтому найти мой новый аккаунт не составит труда.</p>
+
+    <div class="callout info">🙏 Если вы читаете эту инструкцию — к вам будет огромная просьба: <strong>оставьте положительный отзыв на актуальном аккаунте Авито</strong>. Может быть, вы когда-то оставляли его на старом, заблокированном, но вот новый — он будет чистым, и новые клиенты могут не доверять из-за отсутствия отзывов.</div>
+
+    <p>Ниже — профили всех моих заблокированных аккаунтов, чтобы вы могли увидеть количество заказов, отзывы, название профиля и т.д.</p>
+
+    <h3>Алексей — самый первый аккаунт</h3>
+    <p>Как можете видеть — на Авито с 2019 года.</p>
+    <figure><img src="https://perspekt1va.github.io/img/A.jpg" alt="Аккаунт Алексей"></figure>
+
+    <h3>Алексей 2</h3>
+    <p>Скриншота, к сожалению, нет — не успел сделать.</p>
+    <figure><img src="https://perspekt1va.github.io/img/A2.jpg" alt="Аккаунт Алексей 2"></figure>
+
+    <h3>Алексей 3</h3>
+    <figure><img src="https://perspekt1va.github.io/img/A3.jpg" alt="Аккаунт Алексей 3"></figure>
+
+    <h3>Алексей 4</h3>
+    <figure><img src="https://perspekt1va.github.io/img/A4.jpg" alt="Аккаунт Алексей 4"></figure>
+
+    <h3>Алексей 5</h3>
+    <figure><img src="https://perspekt1va.github.io/img/A5.jpg" alt="Аккаунт Алексей 5"></figure>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Руководство пользователя · Спасибо за покупку!
+</footer>
+
+<script>
+  // Мобильное меню
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('topNav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+
+  // Закрывать меню при клике по ссылке (на мобильном)
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => nav.classList.remove('open'));
+  });
+
+  // Копирование команд из блоков <pre>
+  function copyPre(btn){
+    const code = btn.parentElement.querySelector('code');
+    navigator.clipboard.writeText(code.innerText).then(() => {
+      const old = btn.textContent;
+      btn.textContent = 'Скопировано!';
+      setTimeout(() => btn.textContent = old, 1500);
+    });
+  }
+</script>
+
+</body>
+</html>
