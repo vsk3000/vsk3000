@@ -1,0 +1,5 @@
+.tools/
+source-materials/
+__pycache__/
+artifacts/
+*.zip
