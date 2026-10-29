@@ -17,8 +17,7 @@ sections = [
  ('reset','Сброс настроек',26,40),
  ('troubleshooting','Если роутер не работает',40,44),
  ('main-router','Роутер как основной',44,82),
- ('wifi','Название и пароль Wi-Fi',82,103),
- ('telegram','Прокси Telegram',103,len(nodes))
+ ('wifi','Название и пароль Wi-Fi',82,103)
 ]
 styles = dict(re.findall(r'\.([\w-]+)\{([^}]+)\}',source.style.string))
 id_map = {nodes[start].get('id'):sid for sid,_,start,_ in sections}
@@ -93,11 +92,11 @@ template=(ROOT/'scripts/page-template.html').read_text(encoding='utf-8')
 html=template.replace('{{NAV}}',nav).replace('{{CONTENT}}','\n'.join(articles))
 (ROOT/'index.html').write_text(html,encoding='utf-8')
 
-# Assert that every non-whitespace character in the source survives, in order.
+# Assert that all retained source sections survive unchanged, in order.
 result=BeautifulSoup(html,'html.parser')
 for kicker in result.select('.section-kicker,.code-header'):kicker.decompose()
 def normalize(value):return re.sub(r'\s+','',value.replace('\u200b',''))
-original=normalize(source.body.get_text())
+original=normalize(''.join(node.get_text() for _,_,start,end in sections for node in nodes[start:end]))
 converted=normalize(''.join(s.get_text() for s in result.select('.guide-section')))
 assert original==converted, 'Source text differs from generated guide'
 assert len(images)==len(source.find_all('img'))==27
