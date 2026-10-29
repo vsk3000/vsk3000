@@ -56,7 +56,7 @@ for gallery in doc.select('[data-gallery]'):
         html+=f'<a class="screenshot" data-lightbox href="{path}"><img src="{path}" alt="{alt}" loading="lazy" decoding="async"></a>'
     gallery.replace_with(BeautifulSoup(html,'html.parser'))
 
-short_names=['Начало работы','Подключение и вход','Подписка и домены','Выбор сервера','FullVPN','VPN для устройства','Диагностика','DNS и FakeIP','Обновление серверов','Бекап AX3000T','Сброс настроек','Интернет от провайдера','Название и пароль Wi-Fi','Об источниках']
+short_names=['Начало работы','Подключение и вход','Подписка и домены','Выбор сервера','FullVPN','VPN для устройства','Диагностика','DNS и FakeIP','Обновление серверов','Бекап AX3000T','Сброс настроек','Интернет от провайдера','Название и пароль Wi-Fi']
 sections=doc.select('.guide-section')
 assert len(short_names)==len(sections)
 nav='<a class="guide-switch" href="index.html"><small>ДРУГАЯ ИНСТРУКЦИЯ</small><strong>Основное руководство ↗</strong><span>По вашему Google Документу</span></a>'
@@ -77,5 +77,5 @@ for img in result.select('img[src$=".png"]'):
     img['width'],img['height']=struct.unpack('>II',data[16:24])
 assert not result.select('[data-section="telegram"]')
 assert 'Zapret-Manager.sh' not in html
-(ROOT/'ax3000t.html').write_text(str(result),encoding='utf-8')
+(ROOT/'ax3000t.html').write_bytes(str(result).encode('utf-8'))
 print(f'AX3000T: {len(sections)} sections, {len(result.select("img[src]"))} illustrations; all internal links and assets verified.')
