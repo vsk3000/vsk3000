@@ -22,6 +22,9 @@ for placeholder,section_id in [('MAIN_ROUTER','main-router'),('WIFI','wifi')]:
         old=link['href'][1:]
         link['href']='#'+mapping.get(old,'ax-'+old)
     if section_id=='main-router':
+        reset_step=block.select_one('a[href="#ax-reset"]').find_parent('li')
+        reset_step.clear()
+        reset_step.append('Не сбрасывайте AX3000T. Если страница авторизации не открывается, проверьте подключение и обратитесь ко мне через профиль на Авито.')
         intro=BeautifulSoup('<p class="notice">Этот раздел относится к интернет-соединению AX3000T с провайдером. Настраивайте обычный доступ в интернет до проверки маршрутизации Podkop; затем вернитесь к <a href="#ax-diagnostics">диагностике</a>.</p>','html.parser')
         block.h2.insert_after(intro)
     content=content.replace('{{'+placeholder+'}}',str(block))
@@ -56,10 +59,10 @@ for gallery in doc.select('[data-gallery]'):
         html+=f'<a class="screenshot" data-lightbox href="{path}"><img src="{path}" alt="{alt}" loading="lazy" decoding="async"></a>'
     gallery.replace_with(BeautifulSoup(html,'html.parser'))
 
-short_names=['Начало работы','Подключение и вход','Подписка и домены','Выбор сервера','FullVPN','VPN для устройства','Диагностика','DNS и FakeIP','Обновление серверов','Бекап AX3000T','Сброс настроек','Интернет от провайдера','Название и пароль Wi-Fi']
+short_names=['Начало работы','Подключение и вход','Подписка и домены','Выбор сервера','FullVPN','VPN для устройства','Диагностика','DNS и FakeIP','Обновление серверов','Бекап AX3000T','Не сбрасывайте роутер','Интернет от провайдера','Название и пароль Wi-Fi']
 sections=doc.select('.guide-section')
 assert len(short_names)==len(sections)
-nav='<a class="guide-switch" href="index.html"><small>ДРУГАЯ ИНСТРУКЦИЯ</small><strong>Основное руководство ↗</strong><span>По вашему Google Документу</span></a>'
+nav='<a class="guide-switch" href="index.html"><small>ДРУГАЯ ИНСТРУКЦИЯ</small><strong>Xiaomi 4C/4A ↗</strong></a>'
 for i,(section,title) in enumerate(zip(sections,short_names)):
     nav+=f'<a class="nav-link" href="#{section["data-section"]}"><span class="nav-number">{i:02}</span><span>{title}</span></a>'
 template=(ROOT/'scripts/page-template.html').read_text(encoding='utf-8')

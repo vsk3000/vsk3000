@@ -8,6 +8,12 @@ sys.path.insert(0, str(ROOT / '.tools'))
 from bs4 import BeautifulSoup, NavigableString
 
 source = BeautifulSoup((ROOT/'source-materials/google-document.html').read_text(encoding='utf-8'), 'html.parser')
+# Apply the owner's approved correction before rendering and validating the guide.
+old_step = 'в меню программы вводим букву f и нажимаем Enter'
+new_step = 'выбираем «Удалить → установить → настроить Zapret» и нажимаем Enter'
+step = source.find(string=lambda value: value and old_step in value)
+assert step is not None, 'Zapret menu step not found'
+step.replace_with(str(step).replace(old_step, new_step))
 nodes = list(source.body.find_all(recursive=False))
 sections = [
  ('start','Начало работы',0,4),
@@ -91,7 +97,7 @@ nav=''.join(f'<a href="#{sid}" class="nav-link"><span class="nav-number">{i:02}<
 nav='<a class="guide-switch" href="ax3000t.html"><small>ОТДЕЛЬНОЕ РУКОВОДСТВО</small><strong>Xiaomi AX3000T ↗</strong><span>OpenWrt + Podkop</span></a>'+nav
 template=(ROOT/'scripts/page-template.html').read_text(encoding='utf-8')
 html=template.replace('{{NAV}}',nav).replace('{{CONTENT}}','\n'.join(articles))
-(ROOT/'index.html').write_text(html,encoding='utf-8')
+(ROOT/'index.html').write_bytes(html.encode('utf-8'))
 
 # Assert that all retained source sections survive unchanged, in order.
 result=BeautifulSoup(html,'html.parser')

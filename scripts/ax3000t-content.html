@@ -1,6 +1,7 @@
 <section class="guide-section" data-section="ax-start" aria-labelledby="ax-start">
 <div class="section-kicker">XIAOMI AX3000T · OPENWRT + PODKOP</div>
 <h1 id="ax-start">Руководство для Xiaomi AX3000T</h1>
+<div class="critical-notice"><strong>Ни в коем случае не сбрасывайте Xiaomi AX3000T!</strong><p>Не нажимайте кнопку Reset и не выполняйте сброс через панель управления — это удалит настроенную конфигурацию. Если возникла проблема, <a href="#ax-diagnostics">проверьте диагностику</a> или <a href="#contacts">напишите мне на Авито</a>.</p></div>
 <p>Подключение, выборочная маршрутизация, диагностика и восстановление — отдельная инструкция для AX3000T с уже установленными OpenWrt и Podkop.</p>
 <div class="quick-data"><div><small>Адрес панели</small><strong>192.168.5.1</strong></div><div><small>Логин</small><strong>root</strong></div><div><small>Wi-Fi</small><strong>OpenWrt / OpenWrt-5g</strong></div><div><small>Исходный пароль Wi-Fi</small><strong>avito1234</strong></div></div>
 </section>
@@ -77,11 +78,9 @@
 <p>Подождите 3–5 минут и ориентируйтесь на синий индикатор. Если интерфейс после обновления выглядит прежним, очистите кэш или откройте приватное окно.</p>
 </section>
 <section class="guide-section" data-section="ax-reset" aria-labelledby="ax-reset">
-<div class="section-kicker">СБРОС И ВОЗВРАТ К НАСТРОЙКАМ</div><h2 id="ax-reset">Сброс настроек</h2>
-<p>Сброс удаляет текущую конфигурацию. Перед ним сохраните нужные данные. Для обычного обновления списка серверов сначала используйте <a href="#ax-updates">обновление</a>.</p>
-<h3 id="ax-reset-button">Кнопкой на корпусе</h3><ol><li>При включённом питании найдите Reset.</li><li>Удерживайте кнопку 10–15 секунд, затем отпустите.</li><li>Дождитесь перезапуска, после чего подключитесь к роутеру снова.</li></ol>
-<h3 id="ax-reset-panel">Через панель управления</h3><p>Откройте <strong>System → Backup / Flash Firmware → Perform reset</strong> и подтвердите действие. Дождитесь загрузки устройства.</p>
-<p>После сброса восстановите подходящий <a href="#ax-backup">бекап AX3000T</a> и настройте Podkop.</p>
+<div class="section-kicker">ВАЖНО ДЛЯ AX3000T</div><h2 id="ax-reset">Не сбрасывайте роутер</h2>
+<div class="critical-notice"><strong>Сброс Xiaomi AX3000T запрещён.</strong><p>Не используйте Reset на корпусе и сброс настроек в веб-панели. Сброс удалит настроенную конфигурацию роутера.</p></div>
+<p>Если интернет или отдельные сервисы не работают, начните с <a href="#ax-diagnostics">диагностики</a>. Для обновления списка серверов используйте <a href="#ax-updates">обновление серверов</a>. Если нужна помощь, <a href="#contacts">свяжитесь со мной на Авито</a>.</p>
 </section>
 {{MAIN_ROUTER}}
 {{WIFI}}
