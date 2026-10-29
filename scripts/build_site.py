@@ -88,6 +88,7 @@ for i,(sid,title,start,end) in enumerate(sections):
     articles.append(f'<section class="guide-section" data-section="{sid}" aria-labelledby="{sid}"><div class="section-kicker">'+('РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ' if i==0 else f'РАЗДЕЛ {i:02}')+'</div>'+output+'</section>')
 
 nav=''.join(f'<a href="#{sid}" class="nav-link"><span class="nav-number">{i:02}</span><span>{title}</span></a>' for i,(sid,title,_,_) in enumerate(sections))
+nav='<a class="guide-switch" href="ax3000t.html"><small>ОТДЕЛЬНОЕ РУКОВОДСТВО</small><strong>Xiaomi AX3000T ↗</strong><span>OpenWrt + Podkop</span></a>'+nav
 template=(ROOT/'scripts/page-template.html').read_text(encoding='utf-8')
 html=template.replace('{{NAV}}',nav).replace('{{CONTENT}}','\n'.join(articles))
 (ROOT/'index.html').write_text(html,encoding='utf-8')

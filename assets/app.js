@@ -40,7 +40,7 @@
   addEventListener('resize', updateScroll);
   addEventListener('load', updateScroll);
   updateScroll();
-  $('.back-to-top').addEventListener('click', () => { location.hash = 'start'; });
+  $('.back-to-top').addEventListener('click', () => { location.hash = sections[0].dataset.section; });
   $('.print-button').addEventListener('click', () => print());
   $$('.copy-button').forEach(button => button.addEventListener('click', async () => {
     const code = $('code', button.closest('.code-block'));
@@ -72,6 +72,10 @@
   $$('.screenshot').forEach(link => link.addEventListener('click', event => {
     event.preventDefault(); const original = $('img', link); const expanded = $('img', imageDialog); expanded.src = original.src; expanded.alt = original.alt; $('.image-description').textContent = original.alt; imageDialog.showModal();
   }));
+  document.addEventListener('click', event => {
+    const anchor = event.target.closest('a[href^="#"]');
+    if (anchor) { const target = document.getElementById(anchor.hash.slice(1)); const details = target?.closest('details'); if (details) details.open = true; }
+  });
   $('.image-close').addEventListener('click', () => imageDialog.close());
   [searchDialog, imageDialog].forEach(dialog => dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close(); } }));
 })();
