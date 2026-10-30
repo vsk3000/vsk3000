@@ -1,6 +1,6 @@
 # Редактор сайта для Windows
 
-Запуск: `desktop-app/Редактор сайта.exe` или ярлык «Редактор сайта» на рабочем столе.
+Запуск: `desktop-app/RouterSiteEditor.exe` или ярлык «Редактор сайта» на рабочем столе.
 
 1. Выберите руководство и раздел слева.
 2. Изменяйте заголовки и текст прямо на странице. Панель над текстом добавляет списки, ссылки, картинки и предупреждения. Нажмите на картинку для замены или удаления.
@@ -27,6 +27,6 @@
 
 Зависимости: `beautifulsoup4`. Проверки: `python -m unittest discover -s editor/tests -v`.
 
-Сборка Windows EXE: `python -m PyInstaller --noconfirm --onefile --windowed --name "Редактор сайта" --paths .tools --add-data "ui:ui" --distpath desktop-app --workpath editor/build --specpath editor editor/app.py`.
+Сборка Windows EXE: `python -m PyInstaller --noconfirm --onefile --windowed --name RouterSiteEditor --paths .tools --add-data "ui:ui" --distpath desktop-app --workpath editor/build --specpath editor editor/app.py`.
 
 Публикация создаёт коммит через GitHub API и обновляет master без принудительной перезаписи. При конфликте новая версия не заменяет чужие изменения. Локальные рабочие HTML-файлы обновляются; Git-индекс и локальные коммиты приложение не меняет.
