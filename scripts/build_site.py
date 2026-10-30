@@ -4,6 +4,12 @@ from html import escape
 from urllib.parse import urlparse, parse_qs, unquote
 import base64, re, sys, struct, json
 ROOT = Path(__file__).resolve().parents[1]
+# Visual-editor snapshots take precedence over the original document export.
+snapshot = ROOT / 'site-content/index.html'
+if snapshot.exists():
+    (ROOT/'index.html').write_bytes(snapshot.read_bytes())
+    print('Restored index.html from the visual editor snapshot.')
+    sys.exit(0)
 sys.path.insert(0, str(ROOT / '.tools'))
 from bs4 import BeautifulSoup, NavigableString
 

@@ -3,3 +3,7 @@ source-materials/
 __pycache__/
 artifacts/
 *.zip
+.site-editor/
+desktop-app/
+editor/build/
+editor/*.spec

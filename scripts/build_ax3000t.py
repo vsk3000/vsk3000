@@ -4,6 +4,11 @@ from html import escape
 from concurrent.futures import ThreadPoolExecutor
 import re, sys, urllib.request, subprocess, struct
 ROOT=Path(__file__).resolve().parents[1]
+snapshot=ROOT/'site-content/ax3000t.html'
+if snapshot.exists():
+    (ROOT/'ax3000t.html').write_bytes(snapshot.read_bytes())
+    print('Restored ax3000t.html from the visual editor snapshot.')
+    sys.exit(0)
 sys.path.insert(0,str(ROOT/'.tools'))
 from bs4 import BeautifulSoup
 
